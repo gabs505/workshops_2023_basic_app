@@ -1,0 +1,3 @@
+loan_end_reminder_job:
+  cron: '0 8 * * *'
+  class: 'LoanEndReminderJob'

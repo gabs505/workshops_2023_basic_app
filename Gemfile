@@ -4,6 +4,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.2.1'
 
 gem 'bootsnap', require: false
+gem 'sidekiq'
+gem 'sidekiq-cron'
 gem 'bootstrap'
 gem 'devise'
 gem 'importmap-rails'
@@ -33,6 +35,7 @@ group :development, :test do
   gem 'rubocop-rake'
   gem 'rubocop-rspec'
   gem 'shoulda-matchers', '~> 5.3'
+  gem 'bunny'
 end
 
 group :development do

@@ -5,6 +5,7 @@ class BookLoan < ApplicationRecord
   enum status: { checked_out: 'checked_out', cancelled: 'cancelled', returned: 'returned' }
 
   scope :ongoing_by_book, ->(book) { checked_out.where(book:) }
+  scope :upcoming_due_date, -> (date) { checked_out.where(due_date: date.beginning_of_day..date.end_of_day) }
 
   validate :loan_not_available, on: :create
 

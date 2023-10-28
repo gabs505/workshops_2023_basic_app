@@ -18,5 +18,6 @@ module Workshops2023BasicApp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = 'Warsaw'
   end
 end
