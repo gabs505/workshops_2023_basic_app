@@ -6,7 +6,7 @@ class BookLoansController < ApplicationController
     respond_to do |format|
       if @book_loan.save
         LoanCreatedJob.perform_async(@book_loan.id)
-        Publishers::LoanBookPublisher.new(@book_loan.attributes).publish
+        Publishers::LoanBookPublisher.new(@book_loan.attributes, :checked_out).publish
         format.html { redirect_to book_url(book), notice: flash_notice }
         format.json { render :show, status: :created, location: @book_loan }
       else
@@ -19,6 +19,7 @@ class BookLoansController < ApplicationController
   def cancel
     respond_to do |format|
       if @book_loan.cancelled!
+        Publishers::LoanBookPublisher.new(@book_loan.attributes, :cancelled).publish
         format.html { redirect_to book_requests_path, notice: flash_notice }
         format.json { render :show, status: :ok, location: book }
       end
