@@ -1,0 +1,5 @@
+defaults:
+  host: '__host__'
+  rabbitmq_port: '__rabbitmq_port__'
+  rabbitmq_username: '__rabbitmq_username__'
+  rabbitmq_password: '__rabbitmq_password__'
