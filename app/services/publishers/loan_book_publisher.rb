@@ -9,7 +9,7 @@ module Publishers
 
     def publish
       Publishers::Application.new(message: @data, routing_key: routing_key,
-                                  exchange_name: 'basic_app_topic').perform
+                                  exchange_name: 'basic_app').perform
     end
 
     private
