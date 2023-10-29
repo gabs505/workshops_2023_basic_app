@@ -4,20 +4,27 @@ class UserCalendarNotifier
 
   CALENDAR_ID = 'primary'.freeze
 
-  def initialize(user, book)
+  def initialize(user, book_loan)
     @user = user
-    @book = book
+    @book_loan = book_loan
   end
 
   def insert_event
     return unless user.token.present? && user.refresh_token.present?
 
-    google_calendar_client.insert_event(CALENDAR_ID, event_data)
+    event = google_calendar_client.insert_event(CALENDAR_ID, event_data)
+    @book_loan.update!(calendar_event_id: event.id)
+  end
+
+  def delete_event
+    return unless book_loan.calendar_event_id.present? && user.token.present? && user.refresh_token.present?
+
+    google_calendar_client.delete_event(CALENDAR_ID, book_loan.calendar_event_id)
   end
 
   private
 
-  attr_reader :user, :book
+  attr_reader :user, :book_loan
 
   def google_calendar_client
     client = Google::Apis::CalendarV3::CalendarService.new
@@ -33,6 +40,7 @@ class UserCalendarNotifier
   end
 
   def event_data
+    book = book_loan.book
     {
       summary: "Return book: #{book.title}",
       description: "Upcoming due date for: #{book.title}",
