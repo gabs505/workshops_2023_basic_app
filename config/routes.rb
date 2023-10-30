@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get '/books/search' => 'books#search'
+
   resources :books
   resources :publishers
   resources :authors
@@ -12,7 +14,7 @@ Rails.application.routes.draw do
     member do
       post 'cancel'
     end
-  end 
+  end
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
