@@ -10,14 +10,15 @@ module ApplicationHelper
     )
   end
 
-  def loan_book_button(book, css_class: '')
+  def loan_book_button(book, css_class: '', id: '')
     return unless book.loan_available_for?(current_user)
 
     button_to(
       'Loan',
       book_loans_path(book_id: book.id),
       method: :post,
-      class: "btn #{css_class}"
+      class: "btn #{css_class}",
+      id: "loan-#{id}"
     )
   end
 
