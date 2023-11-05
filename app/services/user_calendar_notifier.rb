@@ -4,7 +4,7 @@ class UserCalendarNotifier
 
   CALENDAR_ID = 'primary'.freeze
 
-  def initialize(user, book_loan)
+  def initialize(user:, book_loan:)
     @user = user
     @book_loan = book_loan
   end
@@ -26,6 +26,9 @@ class UserCalendarNotifier
 
   attr_reader :user, :book_loan
 
+  delegate :book, to: :book_loan
+
+
   def google_calendar_client
     client = Google::Apis::CalendarV3::CalendarService.new
 
@@ -40,7 +43,6 @@ class UserCalendarNotifier
   end
 
   def event_data
-    book = book_loan.book
     {
       summary: "Return book: #{book.title}",
       description: "Upcoming due date for: #{book.title}",

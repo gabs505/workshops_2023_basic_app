@@ -30,10 +30,14 @@ class BookLoansController < ApplicationController
   delegate :book, to: :@book_loan
 
   def notify_calendar
-    UserCalendarNotifier.new(current_user, @book_loan).insert_event
+    calendar_notifier.insert_event
   end
   def delete_calendar_event
-    UserCalendarNotifier.new(current_user, @book_loan).delete_event
+    calendar_notifier.delete_event
+  end
+
+  def calendar_notifier
+    @calendar_notifier ||= UserCalendarNotifier.new(user: current_user, book_loan: @book_loan)
   end
 
   def prepare_book_loan
